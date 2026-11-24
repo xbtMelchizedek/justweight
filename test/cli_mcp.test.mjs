@@ -106,7 +106,7 @@ test('MCP: initialize, tools/list, quote, bad input rejected before fetch', asyn
   assert.equal((await h({ jsonrpc: '2.0', method: 'notifications/initialized' })), null);
   const list = await h({ jsonrpc: '2.0', id: 2, method: 'tools/list' });
   assert.equal(list.result.tools.length, TOOLS.length);
-  assert.ok(list.result.tools.every((t) => t.annotations.readOnlyHint));
+  assert.ok(list.result.tools.filter((t) => t.name !== 'infer').every((t) => t.annotations.readOnlyHint));
   const before = f.calls.length;
   const bad = await h({ jsonrpc: '2.0', id: 3, method: 'tools/call', params: { name: 'justweight_quote', arguments: { model: 'm', inputTokens: 0, outputTokens: 0 } } });
   assert.equal(bad.result.isError, true);

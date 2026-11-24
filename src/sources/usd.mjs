@@ -49,6 +49,8 @@ export function parseChutes(body) {
       unit: 'USD',
       inPer1M: String(usdIn),
       outPer1M: String(usdOut),
+      // Chutes publishes the TEE flag; it publishes no retention policy in this API, so that stays unknown.
+      privacy: { retention: 'unknown', noRetention: false, tee: m.confidential_compute === true, e2ee: false, local: false },
       notes,
       source: CHUTES_URL,
     });

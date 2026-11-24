@@ -33,6 +33,19 @@ MCP (stdio, read-only tools `justweight_quote`, `justweight_models`, `justweight
 
 The page has "Open in your agent" buttons (Cursor, Grok Bot, Claude, Claude Code, ChatGPT, Codex, T3 Code) that open a draft prompt telling the agent how to use justweight. They come from [agent-deeplinks](https://github.com/lalalune/agent-deeplinks) by Shaw (MIT, vendored unmodified in `web/vendor/agent-deeplinks/`). Links only prefill; nothing auto-sends.
 
+## infer: route one call, with caps and a receipt
+
+`infer(tier | model, prompt, budget, max_usd, privacy, mode)` is an MCP tool on the same server.
+
+- **Routes** to the cheapest venue for the tier's model that meets `privacy` (`any`, `no-retention`, `tee`, `local`) and both caps. Ties go to lower p50 latency, then direct over resold. Unknown privacy policy fails closed.
+- **Caps:** `max_usd` per call, hard ceiling $0.50; a daily cap, default $1 (`JUSTWEIGHT_DAILY_CAP_USD`, hard ceiling $5). Callers can lower caps, never raise them. Input tokens are estimated at 3 bytes each, which over-counts, so caps err high.
+- **Modes:** `quote` (default) spends nothing and calls nothing but the price snapshot. `live` runs **only** a local model on 127.0.0.1/localhost (`JUSTWEIGHT_LOCAL_URL`, default Ollama's `http://127.0.0.1:11434/v1`; `JUSTWEIGHT_LOCAL_MODEL` = your local tag). Paid venues are never called: justweight holds no API keys and never will.
+- **Receipt:** every call, including refusals, appends a receipt to `~/.justweight/receipts.jsonl` (mode 600): request (prompt as sha256 only), chosen route with its source URL, quote, charged amount, caps, snapshot time, output sha256, and `prev`/`hash` links. `verifyReceipts()` finds the first altered or missing receipt. FLOP venues will return a Flop settlement receipt instead, once testnet has models.
+
+```json
+{ "name": "infer", "arguments": { "tier": "mid", "prompt": "…", "budget": 800, "max_usd": "0.01", "privacy": "no-retention" } }
+```
+
 ## Sources
 
 | id | URL | unit | notes |

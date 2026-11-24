@@ -43,3 +43,7 @@ MCP (stdio), read-only tools `justweight_quote`, `justweight_models`, `justweigh
 - `local`: a model on your own machine (Inkling 2 Mini). Cost 0 in unit LOCAL.
 - `node src/cli.mjs tiers`: 1 IU = 750k in + 250k out of a tier's reference model, cheapest per venue.
 - `sources[].id == "flop-testnet"` / `flop.testnet`: the FLOP testnet registry. When it lists models and a gateway, testnet routes appear here.
+
+## infer (MCP)
+
+`infer` picks the cheapest venue for a tier (`mini`, `mid`, `flash`) or model under your `privacy` rule and `max_usd` (at most $0.50 a call; daily cap default $1). Default `mode: "quote"` spends nothing. `mode: "live"` only runs a local model on 127.0.0.1. Every call returns a receipt with a hash chained to the previous one; keep it as your proof of what was chosen and why.
