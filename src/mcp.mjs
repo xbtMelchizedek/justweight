@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 // Minimal stdio MCP server (JSON-RPC 2.0, one message per line). Price tools are read-only; `infer` quotes
 // by default and only ever runs a model on this machine (see src/infer.mjs).
+import { readFileSync as readPkg } from 'node:fs';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline';
 import { quote, listModels, InputError } from './core.mjs';
 import { fetchAll, usableRates } from './fetchAll.mjs';
 import { iuTable, TIERS } from './tiers.mjs';
 import { infer, PRIVACY, HARD_CALL_CAP_USD, MAX_BUDGET_TOKENS } from './infer.mjs';
+
+const VERSION = JSON.parse(readPkg(new URL('../package.json', import.meta.url), 'utf8')).version;
 
 export const SNAPSHOT_URL = 'https://xbtmelchizedek.github.io/justweight/data/snapshot.json';
 const PROTOCOL = '2025-06-18';
@@ -89,7 +94,7 @@ export function makeServer({ fetchImpl = globalThis.fetch, snapshotUrl = SNAPSHO
       return reply({
         protocolVersion: params?.protocolVersion ?? PROTOCOL,
         capabilities: { tools: {} },
-        serverInfo: { name: 'justweight', version: '0.3.0' },
+        serverInfo: { name: 'justweight', version: VERSION },
       });
     }
     if (method?.startsWith('notifications/')) return null;
@@ -130,7 +135,16 @@ export function makeServer({ fetchImpl = globalThis.fetch, snapshotUrl = SNAPSHO
   };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+/** True when this file is the process entry, also through an npm/npx bin symlink. */
+function isEntry() {
+  try {
+    return !!process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url);
+  } catch {
+    return false;
+  }
+}
+
+if (isEntry()) {
   const handle = makeServer();
   const rl = createInterface({ input: process.stdin });
   rl.on('line', async (line) => {

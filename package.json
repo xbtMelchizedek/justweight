@@ -1,14 +1,57 @@
 {
   "name": "justweight",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Read-only inference price router: quote one job across FLOP, Pearl, Venice, Bittensor Chutes, OpenRouter providers and local models, with every source cited.",
-  "type": "module",
+  "keywords": [
+    "inference",
+    "llm",
+    "router",
+    "pricing",
+    "agents",
+    "mcp",
+    "openrouter",
+    "flop",
+    "pearl",
+    "venice",
+    "bittensor",
+    "chutes"
+  ],
+  "homepage": "https://xbtmelchizedek.github.io/justweight/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xbtMelchizedek/justweight.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xbtMelchizedek/justweight/issues"
+  },
+  "author": "xbtMelchizedek",
   "license": "MIT",
-  "bin": { "justweight": "src/cli.mjs", "justweight-mcp": "src/mcp.mjs" },
-  "engines": { "node": ">=22" },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./infer": "./src/infer.mjs",
+    "./tiers": "./src/tiers.mjs",
+    "./core": "./src/core.mjs",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "justweight": "src/cli.mjs",
+    "justweight-mcp": "src/mcp.mjs"
+  },
+  "files": [
+    "src",
+    "skill.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "test": "node --test test/*.test.mjs",
     "snapshot": "node scripts/snapshot.mjs",
-    "build": "node scripts/build-web.mjs"
+    "build": "node scripts/build-web.mjs",
+    "prepublishOnly": "npm test"
   }
 }

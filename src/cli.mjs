@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // justweight CLI. Read-only: it never signs, never spends and holds no key.
-import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { readFileSync, realpathSync } from 'node:fs';
 import { quote, listModels, validateJob, InputError } from './core.mjs';
 import { fetchAll, usableRates } from './fetchAll.mjs';
 import { iuTable } from './tiers.mjs';
@@ -102,6 +103,15 @@ export async function main(argv, { fetchImpl = globalThis.fetch, out = console.l
   return q.matched ? 0 : 1;
 }
 
-if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('/justweight')) {
+/** True when this file is the process entry, also through an npm/npx bin symlink. */
+function isEntry() {
+  try {
+    return !!process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url);
+  } catch {
+    return false;
+  }
+}
+
+if (isEntry()) {
   main(process.argv.slice(2)).then((code) => process.exit(code));
 }

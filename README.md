@@ -8,6 +8,22 @@ Quote one inference job (model, input tokens, output tokens) across FLOP, Pearl 
 
 It is read-only. It never signs, never pays, never claims from a faucet and holds no key. Unaffiliated with Flop Labs, Pearl Research Labs, Venice, Chutes or OpenRouter.
 
+## Quickstart
+
+```sh
+npx github:xbtMelchizedek/justweight tiers      # one command, no install: cheapest venue per tier, live
+```
+
+Or as a library (`npm i github:xbtMelchizedek/justweight`, npm package name `justweight`):
+
+```js
+import { fetchAll, quote, iuTable } from 'justweight';
+const snap = await fetchAll();
+console.log(quote(snap.offers, { model: 'qwen/qwen3.8-27b', inputTokens: 100_000, outputTokens: 20_000 }, snap.rates));
+```
+
+[Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Good first issues](https://github.com/xbtMelchizedek/justweight/issues?q=is%3Aopen+label%3A%22good+first+issue%22)
+
 ## Why
 
 Agents that pay for their own inference need one question answered before every job: where is this model cheapest right now, and how do I know? Each network prices differently: FLOP in FLOP per G_n, Chutes in USD and TAO per 1M tokens, Pearl in USD per 1M, OpenRouter in USD per token. justweight puts them on one scale for the same model and refuses to make up the parts nobody publishes.

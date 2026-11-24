@@ -1,4 +1,5 @@
 // Fetch every source with its own try/catch: one dead source never hides the others (dev-taste S).
+import { readFileSync } from 'node:fs';
 import * as flop from './sources/flop.mjs';
 import * as usd from './sources/usd.mjs';
 import { parseVenice, VENICE_URL } from './sources/venice.mjs';
@@ -6,7 +7,8 @@ import { parseOrPage, OR_PAGE } from './sources/orproviders.mjs';
 import { localOffers } from './sources/local.mjs';
 import { TIERS } from './tiers.mjs';
 
-const UA = 'justweight/0.2 (+https://github.com/xbtMelchizedek/justweight)';
+const VERSION = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
+const UA = `justweight/${VERSION} (+https://github.com/xbtMelchizedek/justweight)`;
 
 async function get(fetchImpl, url, { kind = 'json', timeoutMs = 30_000 } = {}) {
   const res = await fetchImpl(url, {
