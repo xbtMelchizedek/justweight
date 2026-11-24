@@ -1,0 +1,380 @@
+{
+ "data": [
+  {
+   "context_length": 1000000,
+   "created": 1794268800,
+   "id": "gemini-4-carbon",
+   "model_spec": {
+    "pricing": {
+     "input": {
+      "usd": 2.5,
+      "diem": 2.5
+     },
+     "cache_input": {
+      "usd": 0.125,
+      "diem": 0.125
+     },
+     "output": {
+      "usd": 12.5,
+      "diem": 12.5
+     }
+    },
+    "availableContextTokens": 1000000,
+    "maxCompletionTokens": 65536,
+    "capabilities": {
+     "optimizedForCode": false,
+     "quantization": "not-available",
+     "supportsAudioInput": true,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": false,
+     "supportsReasoning": true,
+     "supportsReasoningEffort": true,
+     "reasoningEffortOptions": [
+      "low",
+      "medium",
+      "high"
+     ],
+     "defaultReasoningEffort": "medium",
+     "supportsResponseSchema": true,
+     "supportsTeeAttestation": false,
+     "supportsE2EE": false,
+     "supportsVideoInput": true,
+     "supportsVision": true,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "Gemini 4 Carbon is Google's frontier model for long-horizon agentic work across software engineering, scientific reasoning, and cybersecurity defense, with a unified 1M token context window and deeper tunable thinking than Gemini 4 Argon.",
+    "name": "Gemini 4 Carbon",
+    "offline": false,
+    "privacy": "anonymized",
+    "traits": []
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  },
+  {
+   "context_length": 262144,
+   "created": 1786924800,
+   "id": "qwen-3-8-27b",
+   "model_spec": {
+    "betaModel": true,
+    "pricing": {
+     "input": {
+      "usd": 0.45,
+      "diem": 0.45
+     },
+     "output": {
+      "usd": 3.2,
+      "diem": 3.2
+     }
+    },
+    "availableContextTokens": 262144,
+    "maxCompletionTokens": 65536,
+    "capabilities": {
+     "optimizedForCode": true,
+     "quantization": "fp8",
+     "supportsAudioInput": false,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": true,
+     "maxImages": 10,
+     "supportsReasoning": true,
+     "supportsReasoningEffort": true,
+     "reasoningEffortOptions": [
+      "none",
+      "low",
+      "medium",
+      "xhigh"
+     ],
+     "defaultReasoningEffort": "xhigh",
+     "supportsResponseSchema": true,
+     "supportsTeeAttestation": false,
+     "supportsE2EE": false,
+     "supportsVideoInput": true,
+     "supportsVision": true,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "Qwen 3.8 27B is a native vision-language dense model with 27B parameters. It improves coding, professional work, research, and long-horizon agentic tasks, with flexible thinking control and image and video understanding. It supports a native 262K-token context window.",
+    "name": "Qwen 3.8 27B",
+    "modelSource": "https://huggingface.co/Qwen/Qwen3.8-27B-FP8",
+    "offline": false,
+    "privacy": "private",
+    "traits": [
+     "default_vision"
+    ],
+    "uncensored": true
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  },
+  {
+   "context_length": 128000,
+   "created": 1762387200,
+   "id": "openai-gpt-oss-120b",
+   "model_spec": {
+    "pricing": {
+     "input": {
+      "usd": 0.07,
+      "diem": 0.07
+     },
+     "output": {
+      "usd": 0.3,
+      "diem": 0.3
+     }
+    },
+    "availableContextTokens": 128000,
+    "maxCompletionTokens": 16384,
+    "capabilities": {
+     "optimizedForCode": false,
+     "quantization": "not-available",
+     "supportsAudioInput": false,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": false,
+     "supportsReasoning": true,
+     "supportsReasoningEffort": true,
+     "reasoningEffortOptions": [
+      "none",
+      "low",
+      "medium",
+      "high"
+     ],
+     "defaultReasoningEffort": "low",
+     "supportsResponseSchema": false,
+     "supportsTeeAttestation": false,
+     "supportsE2EE": false,
+     "supportsVideoInput": false,
+     "supportsVision": false,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases. The model supports configurable reasoning depth, full chain-of-thought access, and native tool use, including function calling, browsing, and structured output generation",
+    "name": "OpenAI GPT OSS 120B",
+    "modelSource": "https://huggingface.co/openai/gpt-oss-120b",
+    "offline": false,
+    "privacy": "private",
+    "traits": []
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  },
+  {
+   "context_length": 524288,
+   "created": 1795478400,
+   "id": "inkling-2-mini",
+   "model_spec": {
+    "pricing": {
+     "input": {
+      "usd": 0.12,
+      "diem": 0.12
+     },
+     "cache_input": {
+      "usd": 0.024,
+      "diem": 0.024
+     },
+     "output": {
+      "usd": 0.5,
+      "diem": 0.5
+     }
+    },
+    "availableContextTokens": 524288,
+    "maxCompletionTokens": 131072,
+    "capabilities": {
+     "optimizedForCode": true,
+     "quantization": "fp4",
+     "supportsAudioInput": false,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": true,
+     "maxImages": 10,
+     "supportsReasoning": true,
+     "supportsReasoningEffort": true,
+     "reasoningEffortOptions": [
+      "none",
+      "minimal",
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+     ],
+     "defaultReasoningEffort": "high",
+     "supportsResponseSchema": true,
+     "supportsTeeAttestation": false,
+     "supportsE2EE": false,
+     "supportsVideoInput": false,
+     "supportsVision": true,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "Inkling 2 Mini is a multimodal looped-transformer MoE model from Thinking Machines Lab (26B total / 3.4B active, 5.4B effective active across 3 loop passes) that accepts text and image inputs and generates text. It supports a 512K-token context window, tool calling, and variable reasoning effort \u2014 suited for coding, agentic workflows, chat, and visual tasks.",
+    "name": "Inkling 2 Mini",
+    "modelSource": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+    "offline": false,
+    "privacy": "private",
+    "traits": []
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  },
+  {
+   "context_length": 1000000,
+   "created": 1792195200,
+   "id": "deepseek-v4-1-flash-1017",
+   "model_spec": {
+    "pricing": {
+     "input": {
+      "usd": 0.3,
+      "diem": 0.3
+     },
+     "cache_input": {
+      "usd": 0.0075,
+      "diem": 0.0075
+     },
+     "output": {
+      "usd": 1.2,
+      "diem": 1.2
+     }
+    },
+    "availableContextTokens": 1000000,
+    "maxCompletionTokens": 262144,
+    "capabilities": {
+     "optimizedForCode": true,
+     "quantization": "fp8",
+     "supportsAudioInput": false,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": true,
+     "maxImages": 10,
+     "supportsReasoning": true,
+     "supportsReasoningEffort": true,
+     "reasoningEffortOptions": [
+      "none",
+      "low",
+      "high",
+      "max"
+     ],
+     "defaultReasoningEffort": "high",
+     "supportsResponseSchema": true,
+     "supportsTeeAttestation": false,
+     "supportsE2EE": false,
+     "supportsVideoInput": false,
+     "supportsVision": true,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "DeepSeek V4.1 Flash is a multimodal Mixture-of-Experts model with 552B backbone parameters (8B active on input, 16B on output) and a 1M-token context window. It natively processes images and text, with strong reasoning, coding, and agentic performance.",
+    "name": "DeepSeek v4.1 Flash (1017)",
+    "modelSource": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "offline": false,
+    "privacy": "private",
+    "traits": []
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  },
+  {
+   "context_length": 128000,
+   "created": 1727966436,
+   "id": "llama-3.2-3b",
+   "model_spec": {
+    "pricing": {
+     "input": {
+      "usd": 0.15,
+      "diem": 0.15
+     },
+     "output": {
+      "usd": 0.6,
+      "diem": 0.6
+     }
+    },
+    "availableContextTokens": 128000,
+    "maxCompletionTokens": 4096,
+    "capabilities": {
+     "optimizedForCode": false,
+     "quantization": "fp16",
+     "supportsAudioInput": false,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": false,
+     "supportsReasoning": false,
+     "supportsReasoningEffort": false,
+     "supportsResponseSchema": false,
+     "supportsTeeAttestation": false,
+     "supportsE2EE": false,
+     "supportsVideoInput": false,
+     "supportsVision": false,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "Llama 3.2 3B is a lightweight model from Meta's Llama 3.2 family, sized for fast, low-cost tasks such as summarization, classification and rewriting. It supports text input and output with a 128K-token context window and handles several languages.",
+    "name": "Llama 3.2 3B",
+    "modelSource": "https://huggingface.co/meta-llama/Llama-3.2-3B",
+    "offline": false,
+    "privacy": "private",
+    "traits": []
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  },
+  {
+   "context_length": 262144,
+   "created": 1788652800,
+   "id": "e2ee-qwen3-8-27b",
+   "model_spec": {
+    "pricing": {
+     "input": {
+      "usd": 0.47,
+      "diem": 0.47
+     },
+     "cache_input": {
+      "usd": 0.047,
+      "diem": 0.047
+     },
+     "output": {
+      "usd": 3.53,
+      "diem": 3.53
+     }
+    },
+    "availableContextTokens": 262144,
+    "maxCompletionTokens": 8192,
+    "capabilities": {
+     "optimizedForCode": true,
+     "quantization": "not-available",
+     "supportsAudioInput": false,
+     "supportsFunctionCalling": true,
+     "supportsLogProbs": false,
+     "supportsMultipleImages": false,
+     "supportsReasoning": true,
+     "supportsReasoningEffort": false,
+     "supportsResponseSchema": false,
+     "supportsTeeAttestation": true,
+     "supportsE2EE": true,
+     "supportsVideoInput": false,
+     "supportsVision": true,
+     "supportsWebSearch": true,
+     "supportsXSearch": false
+    },
+    "description": "Qwen 3.8 27B running in a Trusted Execution Environment (TEE). A multimodal model with 262K context supporting text and image input. Hardware attestation evidence is available for independent verification of enclave identity and configuration.",
+    "name": "Qwen 3.8 27B",
+    "modelSource": "https://huggingface.co/Qwen/Qwen3.8-27B",
+    "offline": false,
+    "privacy": "private",
+    "traits": []
+   },
+   "object": "model",
+   "owned_by": "venice.ai",
+   "type": "text"
+  }
+ ],
+ "object": "list",
+ "type": "text"
+}

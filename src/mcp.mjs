@@ -3,6 +3,7 @@
 import { createInterface } from 'node:readline';
 import { quote, listModels, InputError } from './core.mjs';
 import { fetchAll, usableRates } from './fetchAll.mjs';
+import { iuTable } from './tiers.mjs';
 
 export const SNAPSHOT_URL = 'https://xbtmelchizedek.github.io/justweight/data/snapshot.json';
 const PROTOCOL = '2025-06-18';
@@ -11,7 +12,7 @@ export const TOOLS = [
   {
     name: 'justweight_quote',
     description:
-      'Quote one inference job (model, input and output tokens) across FLOP, Bittensor Chutes, Pearl Labs and OpenRouter. ' +
+      'Quote one inference job (model, input and output tokens) across FLOP, Pearl, Venice, Bittensor Chutes, each OpenRouter provider and local models. ' +
       'Returns the cheapest USD-priced route, every match, and FLOP routes that have no USD price. Read-only; spends nothing.',
     inputSchema: {
       type: 'object',
@@ -28,6 +29,13 @@ export const TOOLS = [
   {
     name: 'justweight_models',
     description: 'List comparable models and which providers list each one.',
+    inputSchema: { type: 'object', properties: { live: { type: 'boolean' } } },
+    annotations: { readOnlyHint: true, openWorldHint: true },
+  },
+  {
+    name: 'justweight_tiers',
+    description:
+      'Standard-unit table: cost of 1 IU (750k input + 250k output tokens of a tier reference model) at the cheapest offer per venue (FLOP, Pearl, Chutes, Venice, OpenRouter, local), list and effective. Read-only.',
     inputSchema: { type: 'object', properties: { live: { type: 'boolean' } } },
     annotations: { readOnlyHint: true, openWorldHint: true },
   },
@@ -56,7 +64,7 @@ export function makeServer({ fetchImpl = globalThis.fetch, snapshotUrl = SNAPSHO
       return reply({
         protocolVersion: params?.protocolVersion ?? PROTOCOL,
         capabilities: { tools: {} },
-        serverInfo: { name: 'justweight', version: '0.1.0' },
+        serverInfo: { name: 'justweight', version: '0.2.0' },
       });
     }
     if (method?.startsWith('notifications/')) return null;
@@ -73,6 +81,9 @@ export function makeServer({ fetchImpl = globalThis.fetch, snapshotUrl = SNAPSHO
         }
         const snap = await load(args.live === true);
         if (name === 'justweight_models') return reply(text(listModels(snap.offers)));
+        if (name === 'justweight_tiers') {
+          return reply(text({ generatedAt: snap.generatedAt, ...iuTable(snap.offers, { testnet: snap.flop?.testnet }) }));
+        }
         if (name === 'justweight_sources') {
           return reply(text({ generatedAt: snap.generatedAt, sources: snap.sources, rates: snap.rates, flop: snap.flop }));
         }

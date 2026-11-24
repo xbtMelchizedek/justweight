@@ -1,4 +1,5 @@
 import { quote, listModels } from './core.mjs';
+import { iuTable } from './tiers.mjs';
 import { getAgentLink, getAgentIcon, agents } from './vendor/agent-deeplinks/index.js';
 
 const $ = (id) => document.getElementById(id);
@@ -16,8 +17,9 @@ function row(r, best) {
   const cost = r.costUsd !== null ? `$${r.costUsd}` : r.cost !== null ? `${r.cost} ${r.unit}` : 'unknown';
   const price = `${r.inPer1M ?? '?'} / ${r.outPer1M ?? '?'} ${r.unit}`;
   const tags = [r.network, ...(r.variant ?? [])].filter(Boolean).join(', ');
+  const eff = r.effective ? `<div class="note">effective ${esc(r.effective.inPer1M)} / ${esc(r.effective.outPer1M)}</div>` : '';
   return `<tr class="${best ? 'best' : ''}"><td>${esc(r.provider)}${best ? ' <span class="badge">cheapest</span>' : ''}<div class="note">${esc(r.model)}${tags ? ' · ' + esc(tags) : ''}</div></td>
-  <td class="num">${esc(cost)}</td><td class="num">${esc(price)}</td>
+  <td class="num">${esc(cost)}</td><td class="num">${esc(price)}${eff}</td>
   <td><div class="note">${(r.notes ?? []).map(esc).join('<br>')}</div><a class="note" href="${esc(r.source)}">source</a></td></tr>`;
 }
 
@@ -37,7 +39,7 @@ function render(job) {
   const head = '<tr><th>Route</th><th>Job cost</th><th>Per 1M in / out</th><th>Evidence</th></tr>';
   let html = '';
   if (q.ranked.length) html += `<div class="panel wrap"><h2>Priced in USD</h2><table>${head}${q.ranked.map((r, i) => row(r, i === 0)).join('')}</table></div>`;
-  if (q.noUsdPrice.length) html += `<div class="panel wrap"><h2>No USD price (FLOP has no market yet)</h2><table>${head}${q.noUsdPrice.map((r) => row(r, false)).join('')}</table></div>`;
+  if (q.noUsdPrice.length) html += `<div class="panel wrap"><h2>Not priced in USD (FLOP has no market; local runs on your hardware)</h2><table>${head}${q.noUsdPrice.map((r) => row(r, false)).join('')}</table></div>`;
   $('result').innerHTML = html;
 }
 
@@ -47,10 +49,23 @@ function renderMeta() {
     snap.sources.map((s) => `<tr><td><a href="${esc(s.url)}">${esc(s.id)}</a></td><td>${s.ok ? 'answered' : 'failed: ' + esc(s.error)}</td><td class="num">${s.count ?? ''}</td></tr>`).join('') +
     '</table></div>' +
     `<p class="note">Rates: ${Object.values(snap.rates ?? {}).map((r) => `${esc(r.unit)} ${r.usd === null ? 'unknown' : '$' + esc(r.usd)}`).join(' · ')} (CoinGecko). FLOP is never converted to USD.</p>`;
-  const t = snap.flop?.testnet, pi = snap.flop?.priceIndex;
+  const t = snap.flop?.testnet, pi = snap.flop?.priceIndex, tpi = snap.flop?.testnetPriceIndex;
   $('flop').innerHTML =
     (t ? `<p>Testnet: finalized block ${esc(t.finalizedHead)}, ${esc(t.models)} model(s) in the registry, gateway ${t.gateway ? esc(t.gateway) : 'not published yet'}. <a href="${esc(t.source)}">source</a></p>` : '<p>Testnet explorer did not answer.</p>') +
+    (tpi ? `<p>Testnet realized price: ${esc(tpi.flopPerGn)} FLOP per G_n (${esc(tpi.trades)} trades). <a href="${esc(tpi.source)}">source</a></p>` : '<p>Testnet price index: no complete hour with trades yet.</p>') +
     (pi ? `<p>Devnet realized price: ${esc(pi.flopPerGn)} FLOP per G_n (net miner revenue, ${esc(pi.trades)} trades, ${esc(pi.buyers)} buyers, ${esc(pi.sellers)} sellers, ${esc(pi.window.start)} to ${esc(pi.window.end)}). Methodology ${esc(pi.methodology)}. <a href="${esc(pi.source)}">source</a></p>` : '<p>No complete price-index hour.</p>');
+}
+
+function renderTiers() {
+  const t = iuTable(snap.offers, { testnet: snap.flop?.testnet });
+  const cell = (c) => c.list === null
+    ? `<td><span class="note">${esc(c.reason)}</span></td>`
+    : `<td class="num">${c.unit === 'USD' ? '$' : ''}${esc(c.list)}${c.unit === 'USD' ? '' : ' ' + esc(c.unit)}` +
+      (c.effective !== null ? `<div class="note">eff $${esc(c.effective)}</div>` : '') +
+      `<div class="note"><a href="${esc(c.source)}">${esc(c.via)}</a></div></td>`;
+  $('tiers').innerHTML = `<table><tr><th>Tier</th>${t.venues.map((v) => `<th>${esc(v.label)}</th>`).join('')}</tr>` +
+    t.rows.map((r) => `<tr><td>${esc(r.tier)}<div class="note">${esc(r.model)}</div></td>${t.venues.map((v) => cell(r.cells[v.id])).join('')}</tr>`).join('') +
+    '</table>';
 }
 
 function renderAgents() {
@@ -76,5 +91,5 @@ renderAgents();
 $('status').textContent = 'Loading prices…';
 fetch('data/snapshot.json', { cache: 'no-store' })
   .then((r) => { if (!r.ok) throw new Error(`snapshot HTTP ${r.status}`); return r.json(); })
-  .then((s) => { snap = s; renderMeta(); $('q').requestSubmit(); })
+  .then((s) => { snap = s; renderMeta(); renderTiers(); $('q').requestSubmit(); })
   .catch((e) => { $('status').textContent = `Could not load prices: ${e.message}. Try again in a minute.`; });

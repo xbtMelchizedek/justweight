@@ -6,24 +6,30 @@ import { makeServer, TOOLS } from '../src/mcp.mjs';
 import { fetchAll } from '../src/fetchAll.mjs';
 
 const fx = (f) => readFileSync(new URL(`./fixtures/${f}`, import.meta.url), 'utf8');
-const routes = {
-  'api.flop.network': ['flop_gateway_models.json'],
-  'explorer.devnet.flop.network': ['flop_price_index.json'],
-  'testnet.flopscan.io': ['flop_testnet_models.json'],
-  'openrouter.ai': ['openrouter_models.json'],
-  'llm.chutes.ai': ['chutes_models.json'],
-  'pearlresearch.ai': ['pearl_pricing.html'],
-  'api.coingecko.com': ['coingecko.json'],
-};
+// Route by host and path; the testnet explorer and openrouter.ai each serve more than one source.
+const routes = [
+  ['api.flop.network', '', 'flop_gateway_models.json'],
+  ['explorer.devnet.flop.network', '', 'flop_price_index.json'],
+  ['testnet.flopscan.io', '/api/price-index', 'flop_testnet_price_index.json'],
+  ['testnet.flopscan.io', '/api/models', 'flop_testnet_models.json'],
+  ['openrouter.ai', '/api/v1/models', 'openrouter_models.json'],
+  ['openrouter.ai', '/qwen/qwen3.8-27b', 'or_page_qwen_qwen3.8-27b.rsc.txt'],
+  ['openrouter.ai', '/deepseek/deepseek-v4.1-flash-1017', 'or_page_deepseek_deepseek-v4.1-flash-1017.rsc.txt'],
+  ['openrouter.ai', '/thinkingmachines/inkling-2-mini', 'or_page_thinkingmachines_inkling-2-mini.rsc.txt'],
+  ['llm.chutes.ai', '', 'chutes_models.json'],
+  ['pearlresearch.ai', '', 'pearl_pricing.html'],
+  ['api.venice.ai', '', 'venice_models.json'],
+  ['api.coingecko.com', '', 'coingecko.json'],
+];
 function fakeFetch({ down = [] } = {}) {
   const calls = [];
   const f = async (url) => {
     calls.push(url);
-    const host = new URL(url).host;
-    if (down.includes(host)) return new Response('nope', { status: 503 });
-    const r = routes[host];
+    const u = new URL(url);
+    if (down.includes(u.host)) return new Response('nope', { status: 503 });
+    const r = routes.find(([h, p]) => h === u.host && u.pathname.startsWith(p));
     if (!r) return new Response('missing', { status: 404 });
-    return new Response(fx(r[0]), { status: 200 });
+    return new Response(fx(r[2]), { status: 200 });
   };
   f.calls = calls;
   return f;
@@ -53,6 +59,25 @@ test('one dead source does not hide the others', async () => {
   assert.ok(snap.offers.some((o) => o.provider === 'chutes-bittensor'));
   assert.ok(snap.offers.some((o) => o.provider === 'flop-realized'));
   assert.equal(snap.flop.testnet.models, 0);
+});
+
+test('v0.2 sources all answer from fixtures, and every new venue is present', async () => {
+  const snap = await fetchAll({ fetchImpl: fakeFetch() });
+  assert.deepEqual(snap.sources.filter((s) => !s.ok).map((s) => s.id), []);
+  assert.equal(snap.sources.length, 12);
+  for (const p of ['venice', 'local', 'openrouter:pearl-research/fp8', 'openrouter:primeintellect/flex']) {
+    assert.ok(snap.offers.some((o) => o.provider === p), p);
+  }
+  assert.equal(snap.flop.testnetPriceIndex, null, 'testnet has no complete hour with trades yet');
+});
+
+test('CLI tiers prints the IU table', async () => {
+  const out = [];
+  const code = await main(['tiers'], { fetchImpl: fakeFetch(), out: (s) => out.push(s) });
+  assert.equal(code, 0);
+  const r = JSON.parse(out[0]);
+  assert.deepEqual(r.rows.map((x) => x.tier), ['mini', 'mid', 'flash']);
+  assert.equal(r.rows[1].cells.pearl.via, 'pearl-labs');
 });
 
 test('CLI quote over fake live sources', async () => {

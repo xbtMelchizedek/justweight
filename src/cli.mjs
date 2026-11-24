@@ -3,11 +3,13 @@
 import { readFileSync } from 'node:fs';
 import { quote, listModels, validateJob, InputError } from './core.mjs';
 import { fetchAll, usableRates } from './fetchAll.mjs';
+import { iuTable } from './tiers.mjs';
 
-const HELP = `justweight: quote one inference job across FLOP, Bittensor (Chutes), Pearl and OpenRouter.
+const HELP = `justweight: quote one inference job across FLOP, Pearl, Venice, Bittensor (Chutes), OpenRouter and local.
 
   justweight quote --model <id> --in <tokens> --out <tokens> [--snapshot file|url]
   justweight models [--snapshot file|url]
+  justweight tiers [--snapshot file|url]    # 1 IU (750k in + 250k out) per tier and venue
   justweight sources [--snapshot file|url]
   justweight snapshot                  # fetch every source live, print the snapshot JSON
 
@@ -59,7 +61,7 @@ export async function main(argv, { fetchImpl = globalThis.fetch, out = console.l
         inputTokens: toInt('in', parsed.opts.in),
         outputTokens: toInt('out', parsed.opts.out),
       });
-    } else if (!['models', 'sources', 'snapshot'].includes(parsed.cmd)) {
+    } else if (!['models', 'sources', 'snapshot', 'tiers'].includes(parsed.cmd)) {
       throw new InputError('command', `unknown ${parsed.cmd}`);
     }
   } catch (e) {
@@ -80,6 +82,10 @@ export async function main(argv, { fetchImpl = globalThis.fetch, out = console.l
   }
   if (cmd === 'sources') {
     out(JSON.stringify({ generatedAt: snap.generatedAt, sources: snap.sources, rates: snap.rates, flop: snap.flop }, null, 1));
+    return 0;
+  }
+  if (cmd === 'tiers') {
+    out(JSON.stringify({ ok: true, generatedAt: snap.generatedAt, ...iuTable(snap.offers, { testnet: snap.flop?.testnet }) }, null, 1));
     return 0;
   }
   if (cmd === 'models') {

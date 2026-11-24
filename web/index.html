@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>justweight: cheapest inference across FLOP, Bittensor, Pearl and OpenRouter</title>
-<meta name="description" content="Read-only inference price router. Quote one job across FLOP, Bittensor Chutes, Pearl Labs and OpenRouter, with every source cited.">
+<title>justweight: cheapest inference across FLOP, Pearl, Venice, Bittensor and OpenRouter</title>
+<meta name="description" content="Read-only inference price router. Quote one job across FLOP, Pearl, Venice, Bittensor Chutes, OpenRouter providers and your own machine, with every source cited.">
 <script>document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="arc/foundation.css">
@@ -15,8 +15,14 @@
 <main>
   <header>
     <h1>justweight</h1>
-    <p class="lede">Quote one inference job across FLOP, Bittensor (Chutes), Pearl Labs and OpenRouter. Every price links to where it came from. Prices with no source stay blank; nothing is guessed.</p>
+    <p class="lede">Quote one inference job across FLOP, Pearl, Venice, Bittensor (Chutes), each OpenRouter provider and your own machine. Every price links to where it came from. Prices with no source stay blank; nothing is guessed.</p>
   </header>
+
+  <section class="panel">
+    <h2>Standard unit by tier</h2>
+    <p class="muted">1 IU = 750k input + 250k output tokens of the tier's reference model, at the cheapest offer per venue. List price first; OpenRouter's published effective price (after cache hits) below it. FLOP fills from settled receipts once testnet lists models.</p>
+    <div id="tiers" class="wrap"></div>
+  </section>
 
   <form id="q" class="panel" autocomplete="off">
     <label>Model <input id="model" list="models" value="qwen/qwen3.8-27b" required maxlength="120"></label>
@@ -46,7 +52,7 @@
   </section>
 
   <footer class="muted">
-    <p>Read-only. justweight never signs, spends or holds a key. FLOP has no market price yet, so FLOP routes show FLOP cost only. Devnet FLOP has no value. Unaffiliated with Flop Labs, Pearl Research Labs, Chutes or OpenRouter.</p>
+    <p>Read-only. justweight never signs, spends or holds a key. FLOP has no market price yet, so FLOP routes show FLOP cost only. Devnet FLOP has no value. Local rows count API cost only; electricity and hardware are not counted. Unaffiliated with Flop Labs, Pearl Research Labs, Venice, Chutes or OpenRouter.</p>
     <p><a href="https://github.com/xbtMelchizedek/justweight">Source</a> · <a href="skill.md">skill.md for agents</a> · <a href="data/snapshot.json">snapshot.json</a> · Agent links by <a href="https://github.com/lalalune/agent-deeplinks">agent-deeplinks</a> (MIT) · UI tokens from <a href="https://uiarc.dev">Arc</a> (MIT)</p>
   </footer>
 </main>

@@ -7,6 +7,10 @@ export const PRICE_INDEX_URL = 'https://explorer.devnet.flop.network/api/price-i
 export const TESTNET_MODELS_URL = 'https://testnet.flopscan.io/api/models';
 // Devnet genesis pinned in flopscan/flop-preflight and served by https://faucet.flop.network/chain.
 export const DEVNET_GENESIS = '0x99c172c095340ace980631f9123544c6bebd4839f3437e463533422d8be2d631';
+// Testnet genesis as served by testnet.flopscan.io (Flop Labs' explorer) on 2026-11-24.
+export const TESTNET_GENESIS = '0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800';
+export const TESTNET_PRICE_INDEX_URL = 'https://testnet.flopscan.io/api/price-index/v1/preview';
+const GENESIS = { devnet: DEVNET_GENESIS, testnet: TESTNET_GENESIS };
 
 const PER_1M = toFixed(1_000_000);
 
@@ -62,16 +66,17 @@ export function parseGateway(body) {
  * This is what miners were actually paid (net miner revenue), read from settled channels, so it is
  * receipts-grade evidence, unlike the list price. Methodology is a draft and not settlement grade.
  */
-export function parsePriceIndex(body) {
+export function parsePriceIndex(body, network = 'devnet') {
   if (!body || !Array.isArray(body.records)) throw new Error('price index: no records');
-  if (body.genesisHash && body.genesisHash !== DEVNET_GENESIS) {
-    throw new Error(`price index: genesis ${body.genesisHash} is not the pinned devnet genesis`);
+  if (!GENESIS[network]) throw new Error(`price index: unknown network ${network}`);
+  if (body.genesisHash !== GENESIS[network]) {
+    throw new Error(`price index: genesis ${body.genesisHash} is not the pinned ${network} genesis`);
   }
   const done = body.records.filter((r) => r.complete && r.status === 'observed' && r.observedPriceFlopPerGn);
   const last = done[done.length - 1];
   if (!last) return null;
   return {
-    network: 'devnet',
+    network,
     unit: body.unit ?? null,
     methodology: `${body.methodologyVersion ?? '?'} (${body.methodologyStatus ?? '?'})`,
     settlementGrade: body.settlementGrade === true,
@@ -83,7 +88,7 @@ export function parsePriceIndex(body) {
     floorsPassed: last.diagnosticFloorsPassed === true,
     topSellerVolumeShare: last.topSellerVolumeShare ?? null,
     receiptId: last.receiptId ?? null,
-    source: PRICE_INDEX_URL,
+    source: network === 'testnet' ? TESTNET_PRICE_INDEX_URL : PRICE_INDEX_URL,
   };
 }
 
@@ -105,7 +110,7 @@ export function realizedOffers(gatewayOffers, index) {
         `${index.trades} trades, ${index.buyers} buyers, ${index.sellers} sellers; top seller ${index.topSellerVolumeShare}`,
         `composite across models; methodology ${index.methodology}; receipt ${index.receiptId}`,
       ],
-      source: PRICE_INDEX_URL,
+      source: index.source,
     }));
 }
 

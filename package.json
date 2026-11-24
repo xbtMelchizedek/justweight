@@ -1,7 +1,7 @@
 {
   "name": "justweight",
-  "version": "0.1.0",
-  "description": "Read-only inference price router: quote one job across FLOP, Bittensor Chutes, Pearl Labs and OpenRouter, with every source cited.",
+  "version": "0.2.0",
+  "description": "Read-only inference price router: quote one job across FLOP, Pearl, Venice, Bittensor Chutes, OpenRouter providers and local models, with every source cited.",
   "type": "module",
   "license": "MIT",
   "bin": { "justweight": "src/cli.mjs", "justweight-mcp": "src/mcp.mjs" },

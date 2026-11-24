@@ -1,12 +1,20 @@
 // Fetch every source with its own try/catch: one dead source never hides the others (dev-taste S).
 import * as flop from './sources/flop.mjs';
 import * as usd from './sources/usd.mjs';
+import { parseVenice, VENICE_URL } from './sources/venice.mjs';
+import { parseOrPage, OR_PAGE } from './sources/orproviders.mjs';
+import { localOffers } from './sources/local.mjs';
+import { TIERS } from './tiers.mjs';
 
-const UA = 'justweight/0.1 (+https://github.com/xbtMelchizedek/justweight)';
+const UA = 'justweight/0.2 (+https://github.com/xbtMelchizedek/justweight)';
 
 async function get(fetchImpl, url, { kind = 'json', timeoutMs = 30_000 } = {}) {
   const res = await fetchImpl(url, {
-    headers: { 'user-agent': UA, accept: kind === 'json' ? 'application/json' : 'text/html' },
+    headers: {
+      'user-agent': UA,
+      accept: kind === 'json' ? 'application/json' : 'text/html',
+      ...(kind === 'rsc' ? { rsc: '1' } : {}),
+    },
     signal: AbortSignal.timeout(timeoutMs),
   });
   if (!res.ok) {
@@ -30,24 +38,37 @@ export async function fetchAll({ fetchImpl = globalThis.fetch, now = () => new D
       return null;
     }
   };
-  const [gw, index, testnet, or, ch, pearl, rates] = await Promise.all([
+  const [gw, index, testnet, tIndex, or, ch, pearl, venice, rates, ...orp] = await Promise.all([
     run('flop-gateway', flop.GATEWAY_URL, {}, flop.parseGateway),
-    run('flop-price-index', flop.PRICE_INDEX_URL, { timeoutMs: 120_000 }, flop.parsePriceIndex),
+    run('flop-price-index', flop.PRICE_INDEX_URL, { timeoutMs: 120_000 }, (b) => flop.parsePriceIndex(b, 'devnet')),
     run('flop-testnet', flop.TESTNET_MODELS_URL, {}, flop.parseTestnet),
+    run('flop-testnet-price-index', flop.TESTNET_PRICE_INDEX_URL, {}, (b) => flop.parsePriceIndex(b, 'testnet')),
     run('openrouter', usd.OPENROUTER_URL, {}, usd.parseOpenRouter),
     run('chutes-bittensor', usd.CHUTES_URL, {}, usd.parseChutes),
     run('pearl-labs', usd.PEARL_URL, { kind: 'text' }, usd.parsePearl),
+    run('venice', VENICE_URL, {}, parseVenice),
     run('coingecko', usd.COINGECKO_URL, {}, usd.parseRates),
+    ...TIERS.map((t) => run(`openrouter-providers:${t.model}`, OR_PAGE(t.model), { kind: 'rsc' }, (b) => parseOrPage(b, t.model))),
   ]);
-  const realized = flop.realizedOffers(gw ?? [], index);
-  const offers = [...(gw ?? []), ...realized, ...(or ?? []), ...(ch ?? []), ...(pearl ?? [])];
+  // Receipt-priced FLOP rows: devnet now; testnet the moment its gateway lists models and an hour clears floors.
+  const realized = [...flop.realizedOffers(gw ?? [], index), ...flop.realizedOffers(gw ?? [], tIndex)];
+  const offers = [
+    ...(gw ?? []),
+    ...realized,
+    ...(or ?? []),
+    ...orp.flatMap((x) => x ?? []),
+    ...(ch ?? []),
+    ...(pearl ?? []),
+    ...(venice ?? []),
+    ...localOffers(),
+  ];
   sources.sort((a, b) => a.id.localeCompare(b.id));
   return {
     generatedAt: now().toISOString(),
     sources,
     offers,
     rates: rates ?? {},
-    flop: { priceIndex: index, testnet },
+    flop: { priceIndex: index, testnetPriceIndex: tIndex, testnet },
   };
 }
 
