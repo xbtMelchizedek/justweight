@@ -115,6 +115,16 @@ On 2026-11-24 at 3:22 PM ET the stage was `explorer-down` (testnet.flopscan.io a
 - Units are never mixed without a cited rate. FLOP stays in FLOP.
 - Variants (TEE, FP8, batch) are kept visible: they match the model for comparison but are not the same artifact.
 
+## Part of the agent inference kit
+
+Small tools that each do one job and work together. Use any one on its own.
+
+- [justweight](https://github.com/xbtMelchizedek/justweight) (this repo): one price table for every inference venue (Flop, Pearl, Venice, Chutes, each OpenRouter provider, local) in one unit, with each price linked to its source.
+- [justweight `infer`](https://github.com/xbtMelchizedek/justweight#infer-route-one-call-with-caps-and-a-receipt): an MCP tool that routes one call to the cheapest venue meeting your privacy floor, under hard spend caps, and returns chained receipts.
+- [agent-price-feed](https://github.com/xbtMelchizedek/agent-price-feed): alerts by JSON Feed, RSS, CLI and MCP when those prices move, a cheaper route appears, or Flop lists a model.
+- [agent-spendcap](https://github.com/xbtMelchizedek/agent-spendcap): a budget policy for agents: holds before each call, settlement from real usage, a hash-chained ledger, and a drop-in fetch for OpenAI-compatible APIs.
+- [flop-receipt-root](https://github.com/xbtMelchizedek/flop-receipt-root): proves a Flop compute settlement to an EVM contract without a bridge, and checks one receipt offline.
+
 ## License
 
 MIT. Vendored: agent-deeplinks (MIT, Shaw) and Arc UI foundation tokens (MIT, see `web/arc/LICENSE`).
