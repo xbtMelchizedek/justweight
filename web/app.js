@@ -50,14 +50,16 @@ function renderMeta() {
     '</table></div>' +
     `<p class="note">Rates: ${Object.values(snap.rates ?? {}).map((r) => `${esc(r.unit)} ${r.usd === null ? 'unknown' : '$' + esc(r.usd)}`).join(' · ')} (CoinGecko). FLOP is never converted to USD.</p>`;
   const t = snap.flop?.testnet, pi = snap.flop?.priceIndex, tpi = snap.flop?.testnetPriceIndex;
+  const w = snap.flop?.watch;
   $('flop').innerHTML =
+    (w ? `<p><strong>Testnet FLOP column:</strong> ${esc(w.stage)}. ${esc(w.detail)}. Checked every rebuild (every 2 hours).</p>` : '') +
     (t ? `<p>Testnet: finalized block ${esc(t.finalizedHead)}, ${esc(t.models)} model(s) in the registry, gateway ${t.gateway ? esc(t.gateway) : 'not published yet'}. <a href="${esc(t.source)}">source</a></p>` : '<p>Testnet explorer did not answer.</p>') +
     (tpi ? `<p>Testnet realized price: ${esc(tpi.flopPerGn)} FLOP per G_n (${esc(tpi.trades)} trades). <a href="${esc(tpi.source)}">source</a></p>` : '<p>Testnet price index: no complete hour with trades yet.</p>') +
     (pi ? `<p>Devnet realized price: ${esc(pi.flopPerGn)} FLOP per G_n (net miner revenue, ${esc(pi.trades)} trades, ${esc(pi.buyers)} buyers, ${esc(pi.sellers)} sellers, ${esc(pi.window.start)} to ${esc(pi.window.end)}). Methodology ${esc(pi.methodology)}. <a href="${esc(pi.source)}">source</a></p>` : '<p>No complete price-index hour.</p>');
 }
 
 function renderTiers() {
-  const t = iuTable(snap.offers, { testnet: snap.flop?.testnet });
+  const t = iuTable(snap.offers, { testnet: snap.flop?.testnet, watch: snap.flop?.watch });
   const cell = (c) => c.list === null
     ? `<td><span class="note">${esc(c.reason)}</span></td>`
     : `<td class="num">${c.unit === 'USD' ? '$' : ''}${esc(c.list)}${c.unit === 'USD' ? '' : ' ' + esc(c.unit)}` +

@@ -85,7 +85,7 @@ export async function main(argv, { fetchImpl = globalThis.fetch, out = console.l
     return 0;
   }
   if (cmd === 'tiers') {
-    out(JSON.stringify({ ok: true, generatedAt: snap.generatedAt, ...iuTable(snap.offers, { testnet: snap.flop?.testnet }) }, null, 1));
+    out(JSON.stringify({ ok: true, generatedAt: snap.generatedAt, ...iuTable(snap.offers, { testnet: snap.flop?.testnet, watch: snap.flop?.watch }) }, null, 1));
     return 0;
   }
   if (cmd === 'models') {

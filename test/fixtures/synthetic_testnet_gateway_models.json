@@ -1,0 +1,510 @@
+{
+ "object": "list",
+ "data": [
+  {
+   "id": "qwen/qwen3.8-27b",
+   "object": "model",
+   "created": 1726704000,
+   "owned_by": "flop-network",
+   "name": "Qwen3.8 27B",
+   "canonical_slug": "qwen/qwen3.8-27b",
+   "context_length": 32768,
+   "architecture": {
+    "input_modalities": [
+     "text"
+    ],
+    "output_modalities": [
+     "text"
+    ],
+    "modality": "text->text"
+   },
+   "default_parameters": null,
+   "links": {
+    "details": "/api/v1/models/qwen%2Fqwen2.5-0.5b-instruct"
+   },
+   "per_request_limits": {
+    "prompt_tokens": 24576,
+    "completion_tokens": 8192
+   },
+   "pricing": {
+    "prompt": "0.000001",
+    "completion": "0.000001",
+    "input_cache_read": "0"
+   },
+   "supported_parameters": [
+    "max_tokens"
+   ],
+   "supported_voices": null,
+   "top_provider": {
+    "context_length": 32768,
+    "max_completion_tokens": 8192,
+    "is_moderated": false
+   },
+   "x-flop": {
+    "registry_model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "registry_version": "1",
+    "model_hash": "0x1a52c1abe781db051e70ae357f72bb70161ca0c092df0b618f22a9292ba63306",
+    "precision": 2,
+    "registry_precision": "BF16",
+    "quantization": "bf16",
+    "precision_detail": {
+     "weights": "bf16",
+     "activations": null,
+     "kv_cache": null
+    },
+    "decode_policy": "openai-chat-v1",
+    "decode_policy_hash": "0xeca6a3f9c5a9fa1556892182ffef15b1273c075146a2d1a87814ae83ecea3053",
+    "backend": "vllm",
+    "backend_model_name": "Qwen/Qwen2.5-0.5B-Instruct",
+    "capacity_tpm": 409017864,
+    "capacity_rule": "sum(floor(unique_healthy_session_capacity_tpm * 0.8))",
+    "datacenters": [
+     {
+      "country_code": "CA"
+     },
+     {
+      "country_code": "CN"
+     },
+     {
+      "country_code": "CZ"
+     },
+     {
+      "country_code": "DE"
+     },
+     {
+      "country_code": "FI"
+     },
+     {
+      "country_code": "FR"
+     },
+     {
+      "country_code": "IN"
+     },
+     {
+      "country_code": "JP"
+     },
+     {
+      "country_code": "KR"
+     },
+     {
+      "country_code": "KZ"
+     },
+     {
+      "country_code": "SG"
+     },
+     {
+      "country_code": "US"
+     },
+     {
+      "country_code": "UY"
+     }
+    ],
+    "price_sources": [
+     {
+      "miner_address": "5C4wCvAt16qZfV15GH4bjXGc8FtGrJ5hnyuyjn26YuuS4XSP",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5C8Riqh9Lj9Yv3ZKaUMDAzKLVf71VoedSTvuLMnr9KZ8qXiT",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5CkjB9wt6ZeDxmq9trWXha598HY9b9NYBim5ZUVneDCXGHvu",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5CodiHKQStyZJH2ZbVBRGwWziRgE8MN9WZ4qpNFR2yknsYNd",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5CPXobremjchLNeyPB31CinViBG9k559RVirCnmdrtzKAsKp",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5D9uTgFbaNx7YbXRcckf47xvsegyTYbMXWgLeahGY2VBWw5x",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5DJ4UUcwYEsSaJojzAjVqsXyiXD27dCYqVpm5n2LP26ZfLd3",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5DvMC8SvhANbVAuVkCjzSNiF9RUMQrqJuvdb1Kp4uGA9x6HL",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5Evj8r6UnX6r6BTcEv3BZVyLQAnoRRrxWDehtAoARzpEu3xU",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5FAKj7SD1giPC3GzV5zV6uvJZ3NrCdAg6BVPVcrMCuFxy1G6",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5FjyTgPLwgdCvdAxJu8QXzX43YHdG37rfsNUtaGDg4dc7D3R",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5FkMpoVojgbmpex4ENpLimrQ29pMPQK8qJZRWDHpQxYELwZ1",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5Fus6dm6kGgFhs61siy75YDpGpX4pzuedU3meJpDBcGdwyYX",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5G8ihV81gQ5RMbBm7wbSdWyA2fFc6T7jqDdtCcEYcFKfSZVf",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5GbipX9QwEYCsK2vcRYeDDM1PQXCMiZcEyhwQyepXcjPWGAk",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5GLAWBQ7dUcyxWVXTnwxbArGKum6oVeWCCQeLMXKTyTj13yX",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5Gn7WjjvNcHJm2kEXXbLz54tKUGs3UyyvLDokjXc4CZSC43T",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5GNcm2SyEsvF3Mo9N6UwKBM2j1tmrktHGJZPs1uYUrZgQa6J",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5GQxSVhbWeR6V99aS6FF6DjRym5QDY1Xp752yaaiRpEFVn8x",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5Gs2KEPhQLLDXBsxEyJQYnvkCHVnBhyhii1QSidV33vNW4xk",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5GupSN5WhXhya78Wfw7pATSK8DrhfGEonjnowCCamfvqhk8H",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5H1qRPoPZAL4wa6VAdcFnzwCUKVEoaMD7UtrW3R9pDBjpsNG",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5Hj91PggVephyi7pGo4YK3qxs3CKbhK8cMmCiYCYWLWjvZqh",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     },
+     {
+      "miner_address": "5HnF6eX7orSbBKBZWsEMPVUoy3wBVKk4nTEHUhLGvD875Mr2",
+      "version": "chain:4534558",
+      "source": "testnet-signed",
+      "effective_at": "2026-11-24T14:21:20.000Z",
+      "expires_at": "2026-11-24T14:23:20.000Z",
+      "ratified_at": "2026-11-24T14:21:20.000Z",
+      "flop_per_gn": "0.0000005",
+      "gn_per_prompt_token": "2",
+      "gn_per_completion_token": "2",
+      "flop_usd": "1",
+      "rounding": {
+       "mode": "ceil",
+       "decimal_places": 12
+      }
+     }
+    ],
+    "measurements": {
+     "capacity_tpm": {
+      "value": 409017864,
+      "unit": "tokens/min",
+      "rule": "sum(floor(unique_healthy_session_capacity_tpm * 0.8))",
+      "observed_at": "2026-11-24T14:20:53.542Z",
+      "expires_at": "2026-11-24T15:13:11.163Z",
+      "provenance": "admission-derived-capacity",
+      "sample_count": null
+     },
+     "throughput_tokens_per_second": null,
+     "latency_ms": null,
+     "quality": null
+    }
+   }
+  }
+ ],
+ "total_count": 3,
+ "links": {
+  "next": null
+ },
+ "_synthetic": "Hand-made from flop_gateway_models.json (devnet) with a tier model id; not real testnet data."
+}

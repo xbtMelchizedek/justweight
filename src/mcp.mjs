@@ -111,7 +111,7 @@ export function makeServer({ fetchImpl = globalThis.fetch, snapshotUrl = SNAPSHO
         const snap = await load(args.live === true);
         if (name === 'justweight_models') return reply(text(listModels(snap.offers)));
         if (name === 'justweight_tiers') {
-          return reply(text({ generatedAt: snap.generatedAt, ...iuTable(snap.offers, { testnet: snap.flop?.testnet }) }));
+          return reply(text({ generatedAt: snap.generatedAt, ...iuTable(snap.offers, { testnet: snap.flop?.testnet, watch: snap.flop?.watch }) }));
         }
         if (name === 'justweight_sources') {
           return reply(text({ generatedAt: snap.generatedAt, sources: snap.sources, rates: snap.rates, flop: snap.flop }));

@@ -19,7 +19,7 @@ const PER_1M = toFixed(1_000_000);
  * Price = flop_per_gn x gn_per_token, median across the miners' signed price sources.
  * The OpenRouter-style `pricing` field is cross-checked (method two) and any mismatch is a note, not a silent pick.
  */
-export function parseGateway(body) {
+export function parseGateway(body, { network = null, sourceUrl = null } = {}) {
   if (!body || !Array.isArray(body.data)) throw new Error('gateway: no data array');
   const offers = [];
   for (const m of body.data) {
@@ -32,8 +32,9 @@ export function parseGateway(body) {
     const outTok = perTok('gn_per_completion_token');
     if (inTok === null || outTok === null) continue;
     const kinds = [...new Set(ps.map((p) => p.source))].sort();
-    const devnet = kinds.some((k) => /devnet/i.test(k)) || /devnet/i.test(m.name ?? '');
+    const devnet = network ? network === 'devnet' : kinds.some((k) => /devnet/i.test(k)) || /devnet/i.test(m.name ?? '');
     const notes = [];
+    if (network === 'testnet') notes.push('testnet FLOP has no market value; settled testnet spend is what the airdrop measures');
     const nominalUsd = [...new Set(ps.map((p) => p.flop_usd))];
     if (devnet) notes.push('devnet FLOP has no value and earns nothing');
     notes.push(`price source: ${kinds.join(', ')}; ${ps.length} miner quote(s)`);
@@ -46,7 +47,7 @@ export function parseGateway(body) {
     const exp = ps.map((p) => p.expires_at).filter(Boolean).sort()[0] ?? null;
     offers.push({
       provider: 'flop-gateway',
-      network: devnet ? 'devnet' : 'unknown',
+      network: network ?? (devnet ? 'devnet' : 'unknown'),
       model: m.id,
       unit: 'FLOP',
       inPer1M: fromFixed(mulFixed(inTok, PER_1M), 12),
@@ -55,7 +56,7 @@ export function parseGateway(body) {
       expiresAt: exp,
       capacityTpm: x.capacity_tpm ?? null,
       notes,
-      source: GATEWAY_URL,
+      source: sourceUrl ?? GATEWAY_URL,
     });
   }
   return offers;
@@ -125,4 +126,31 @@ export function parseTestnet(body) {
     gateway: body.gateway?.url ?? null,
     source: TESTNET_MODELS_URL,
   };
+}
+
+// Only Flop Labs' own hosts may be followed from the explorer's advertised gateway (it is data, not trust).
+const FLOP_HOST = /^https:\/\/([a-z0-9-]+\.)*(flop\.network|flopscan\.io)(:443)?(\/|$)/i;
+
+/** The testnet gateway's model catalog URL, once the explorer lists models and advertises a Flop-hosted gateway. */
+export function testnetGatewayModelsUrl(testnet) {
+  if (!testnet || !(testnet.models > 0) || typeof testnet.gateway !== 'string') return null;
+  if (!FLOP_HOST.test(testnet.gateway)) return null;
+  const base = testnet.gateway.replace(/\/+$/, '').replace(/\/v1$/, '');
+  return `${base}/v1/models`;
+}
+
+/**
+ * Watcher: where the testnet FLOP column stands, as one stage a person (or a workflow summary) can read.
+ * The column itself fills by the normal path (realizedOffers on testnet rows); this only explains it.
+ */
+export function flopWatch({ testnet, testnetGateway, testnetGatewayUrl, testnetIndex, realized }) {
+  const filled = (realized ?? []).filter((o) => o.network === 'testnet').length;
+  if (filled > 0) return { stage: 'filled', filled, detail: `${filled} testnet model(s) priced from settled receipts` };
+  if (!testnet) return { stage: 'explorer-down', filled, detail: 'testnet explorer did not answer' };
+  if (!(testnet.models > 0)) return { stage: 'no-models', filled, detail: `testnet has 0 models (finalized block ${testnet.finalizedHead}); no receipts to price from yet` };
+  if (!testnetGatewayUrl) return { stage: 'no-gateway', filled, detail: `${testnet.models} testnet model(s) listed, but no Flop-hosted gateway is advertised yet` };
+  if (!testnetGateway) return { stage: 'gateway-unreadable', filled, detail: `testnet gateway ${testnetGatewayUrl} did not answer or had no priced models` };
+  if (!testnetIndex) return { stage: 'no-receipt-hour', filled, detail: `${testnetGateway.length} testnet model(s) priced by miners; waiting for a complete hour of settled receipts` };
+  if (testnetIndex.floorsPassed !== true) return { stage: 'below-floors', filled, detail: `last receipt hour (${testnetIndex.trades} trades) is below the index floors; not used` };
+  return { stage: 'no-match', filled, detail: 'receipt price exists, but no testnet model has G_n per token to apply it to' };
 }

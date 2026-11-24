@@ -1,0 +1,130 @@
+{
+ "methodologyVersion": "v1-draft.1",
+ "methodologyStatus": "draft",
+ "activationDate": null,
+ "settlementGrade": false,
+ "consistency": "finalized",
+ "paymentBasis": "net-miner-revenue",
+ "unit": "FLOP/reference-GFLOP",
+ "population": "composite-spot",
+ "filter": {
+  "model": null,
+  "tier": null
+ },
+ "diagnosticFloors": {
+  "trades": 5,
+  "buyers": 3,
+  "sellers": 3
+ },
+ "genesisHash": "0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800",
+ "observationHead": {
+  "number": 23130,
+  "hash": "0x06cb2b70e25097572c810d91133e9e3b78c52da5392a8b2752aaceb5bec90722",
+  "parentHash": "0xfe1b317baf1bd374e95201b3f20bc49514c77be0f8e15380b4180d9f0c9a4d3f",
+  "timestamp": 1795547432000
+ },
+ "indexedThrough": 23135,
+ "records": [
+  {
+   "start": "2026-11-24T18:00:00.000Z",
+   "end": "2026-11-24T19:00:00.000Z",
+   "complete": true,
+   "status": "observed",
+   "observedPriceFlopPerGn": "0.000002",
+   "officialRate": null,
+   "minerPaidPlanck": "0",
+   "volumeGn": "0",
+   "trades": 7,
+   "sourceTrades": 0,
+   "distinctBuyers": 4,
+   "distinctSellers": 3,
+   "topSellerVolumeShare": "0.4",
+   "sellerHhi": null,
+   "hardVolumeShare": null,
+   "diagnosticFloorsPassed": true,
+   "floorsFailed": [
+    "min_trades",
+    "min_distinct_buyers",
+    "min_distinct_sellers"
+   ],
+   "excluded": {},
+   "coverageIssues": [],
+   "receiptId": "synthetic",
+   "manifest": {
+    "methodologyVersion": "v1-draft.1",
+    "genesisHash": "0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800",
+    "observationHead": {
+     "number": 23130,
+     "hash": "0x06cb2b70e25097572c810d91133e9e3b78c52da5392a8b2752aaceb5bec90722",
+     "parentHash": "0xfe1b317baf1bd374e95201b3f20bc49514c77be0f8e15380b4180d9f0c9a4d3f",
+     "timestamp": 1795547432000
+    },
+    "indexedThrough": 23135,
+    "filter": {
+     "model": null,
+     "tier": null
+    },
+    "start": 1795543200000,
+    "end": 1795546800000,
+    "predecessor": {
+     "number": 18959,
+     "hash": "0x301b4b30af1116010c57fd4bc906527defc5de01cfe5a377768d42da5cf51077",
+     "parentHash": "0x59ac6cf39d2aabc81c94f801e98601e6016349647a44e773eb274d0782ff3562",
+     "timestamp": 1795543199000
+    },
+    "successor": {
+     "number": 22509,
+     "hash": "0x0a324daef262b73f94733418378c009f9b25fe496995a68d0091f4bdaa104505",
+     "parentHash": "0x115e99fe8d1fe975f77e4123042037c63c02cba6ec8b57f3cdb9361613154fc9",
+     "timestamp": 1795546800000
+    },
+    "coverageIssues": [],
+    "inputs": []
+   }
+  }
+ ],
+ "daily": [
+  {
+   "period": "2026-11-23",
+   "requestedHours": 5,
+   "completeHours": 0,
+   "calendarHours": 24,
+   "diagnosticPassingHours": 0,
+   "partial": true,
+   "incomplete": true,
+   "minerPaidPlanck": null,
+   "volumeGn": null,
+   "observedPriceFlopPerGn": null,
+   "officialRate": null
+  },
+  {
+   "period": "2026-11-24",
+   "requestedHours": 19,
+   "completeHours": 6,
+   "calendarHours": 24,
+   "diagnosticPassingHours": 0,
+   "partial": true,
+   "incomplete": true,
+   "minerPaidPlanck": "0",
+   "volumeGn": "0",
+   "observedPriceFlopPerGn": null,
+   "officialRate": null
+  }
+ ],
+ "monthly": [
+  {
+   "period": "2026-11",
+   "requestedHours": 24,
+   "completeHours": 6,
+   "calendarHours": 720,
+   "diagnosticPassingHours": 0,
+   "partial": true,
+   "incomplete": true,
+   "minerPaidPlanck": "0",
+   "volumeGn": "0",
+   "observedPriceFlopPerGn": null,
+   "officialRate": null
+  }
+ ],
+ "_synthetic": "Hand-made: one complete hour that passes the floors; not real testnet data."
+}

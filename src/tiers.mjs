@@ -30,7 +30,7 @@ function iuCost(o, basis) {
 }
 
 /** Cheapest offer per venue per tier, list and effective. FLOP cells stay in FLOP; nothing is converted. */
-export function iuTable(offers, { testnet = null } = {}) {
+export function iuTable(offers, { testnet = null, watch = null } = {}) {
   const rows = [];
   for (const t of TIERS) {
     const key = canonicalModel(t.model).key;
@@ -62,7 +62,7 @@ export function iuTable(offers, { testnet = null } = {}) {
             effectiveVia: bestEff ? bestEff.o.provider : null,
             source: best.o.source,
           }
-        : { list: null, reason: v.id === 'flop' ? flopReason(testnet) : 'not listed' };
+        : { list: null, reason: v.id === 'flop' ? (watch && watch.stage !== 'filled' ? watch.detail : flopReason(testnet)) : 'not listed' };
     }
     rows.push({ tier: t.id, model: t.model, why: t.why, cells });
   }

@@ -50,10 +50,15 @@ export async function fetchAll({ fetchImpl = globalThis.fetch, now = () => new D
     run('coingecko', usd.COINGECKO_URL, {}, usd.parseRates),
     ...TIERS.map((t) => run(`openrouter-providers:${t.model}`, OR_PAGE(t.model), { kind: 'rsc' }, (b) => parseOrPage(b, t.model))),
   ]);
+  // Watcher: once the testnet explorer lists models and advertises a Flop-hosted gateway, read its catalog too.
+  const tgwUrl = flop.testnetGatewayModelsUrl(testnet);
+  const tgw = tgwUrl ? await run('flop-testnet-gateway', tgwUrl, {}, (b) => flop.parseGateway(b, { network: 'testnet', sourceUrl: tgwUrl })) : null;
   // Receipt-priced FLOP rows: devnet now; testnet the moment its gateway lists models and an hour clears floors.
-  const realized = [...flop.realizedOffers(gw ?? [], index), ...flop.realizedOffers(gw ?? [], tIndex)];
+  const realized = [...flop.realizedOffers(gw ?? [], index), ...flop.realizedOffers(tgw ?? [], tIndex)];
+  const watch = flop.flopWatch({ testnet, testnetGateway: tgw, testnetGatewayUrl: tgwUrl, testnetIndex: tIndex, realized });
   const offers = [
     ...(gw ?? []),
+    ...(tgw ?? []),
     ...realized,
     ...(or ?? []),
     ...orp.flatMap((x) => x ?? []),
@@ -68,7 +73,7 @@ export async function fetchAll({ fetchImpl = globalThis.fetch, now = () => new D
     sources,
     offers,
     rates: rates ?? {},
-    flop: { priceIndex: index, testnetPriceIndex: tIndex, testnet },
+    flop: { priceIndex: index, testnetPriceIndex: tIndex, testnet, watch },
   };
 }
 

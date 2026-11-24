@@ -74,6 +74,24 @@ The page has "Open in your agent" buttons (Cursor, Grok Bot, Claude, Claude Code
 
 The FLOP column only fills from receipt-priced rows (`flop-realized`, from settled channels), never from list prices. On 2026-11-24 the FLOP testnet has 0 models, so the column shows why it is empty.
 
+### Testnet watcher
+
+The FLOP column fills itself. Every 2-hourly rebuild, the watcher (`flopWatch` in `src/sources/flop.mjs`) walks the same steps and records where things stand in `snapshot.flop.watch`, the page's FLOP panel and the Actions run summary (`scripts/flop-watch.mjs`):
+
+| stage | meaning |
+|---|---|
+| `explorer-down` | testnet.flopscan.io did not answer |
+| `no-models` | the testnet registry lists 0 models |
+| `no-gateway` | models are listed, but the explorer advertises no Flop-hosted gateway (only https on `*.flop.network` or `*.flopscan.io` is followed) |
+| `gateway-unreadable` | the gateway's `/v1/models` did not answer, or had no signed prices |
+| `no-receipt-hour` | miners price models, but no complete hour of settled testnet receipts exists yet |
+| `below-floors` | a receipt hour exists, but it fails the index floors (trades, buyers, sellers), so it is not used |
+| `filled` | testnet receipts price at least one model, and the tier cell shows it in FLOP |
+
+Once filled, a cell is the receipt price (FLOP per G_n, from the testnet price index) times each model's G_n per token, and it stays in FLOP. Since a listed testnet model's exact JSON isn't published yet, the tests use hand-made `synthetic_*` fixtures. Each one is labeled as synthetic inside the file.
+
+On 2026-11-24 at 3:22 PM ET the stage was `explorer-down` (testnet.flopscan.io answered 503 "Era-T reader unavailable"). Earlier that day it was `no-models`.
+
 ## Rules it follows
 
 - Missing data is an error, never zero. A dead source is reported in `sources` and the rest still quote.
