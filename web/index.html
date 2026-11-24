@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>justweight: cheapest inference across FLOP, Bittensor, Pearl and OpenRouter</title>
+<meta name="description" content="Read-only inference price router. Quote one job across FLOP, Bittensor Chutes, Pearl Labs and OpenRouter, with every source cited.">
+<script>document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="arc/foundation.css">
+<link rel="stylesheet" href="arc/badge.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>justweight</h1>
+    <p class="lede">Quote one inference job across FLOP, Bittensor (Chutes), Pearl Labs and OpenRouter. Every price links to where it came from. Prices with no source stay blank; nothing is guessed.</p>
+  </header>
+
+  <form id="q" class="panel" autocomplete="off">
+    <label>Model <input id="model" list="models" value="qwen/qwen3.8-27b" required maxlength="120"></label>
+    <datalist id="models"></datalist>
+    <label>Input tokens <input id="in" type="number" min="0" step="1" value="100000" required></label>
+    <label>Output tokens <input id="out" type="number" min="0" step="1" value="20000" required></label>
+    <button type="submit">Quote</button>
+  </form>
+
+  <p id="status" role="status" aria-live="polite"></p>
+  <section id="result"></section>
+
+  <section class="panel">
+    <h2>Open in your agent</h2>
+    <p class="muted">Hands your agent a prompt that tells it how to use justweight. Links open a draft; nothing is sent for you.</p>
+    <div id="agents" class="agents"></div>
+  </section>
+
+  <section class="panel">
+    <h2>FLOP status</h2>
+    <div id="flop"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Sources</h2>
+    <div id="sources"></div>
+  </section>
+
+  <footer class="muted">
+    <p>Read-only. justweight never signs, spends or holds a key. FLOP has no market price yet, so FLOP routes show FLOP cost only. Devnet FLOP has no value. Unaffiliated with Flop Labs, Pearl Research Labs, Chutes or OpenRouter.</p>
+    <p><a href="https://github.com/xbtMelchizedek/justweight">Source</a> · <a href="skill.md">skill.md for agents</a> · <a href="data/snapshot.json">snapshot.json</a> · Agent links by <a href="https://github.com/lalalune/agent-deeplinks">agent-deeplinks</a> (MIT) · UI tokens from <a href="https://uiarc.dev">Arc</a> (MIT)</p>
+  </footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

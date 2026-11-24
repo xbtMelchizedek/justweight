@@ -1,0 +1,137 @@
+{
+ "data": [
+  {
+   "id": "z-ai/glm-5.3-flashx-legal",
+   "name": "Z.ai: GLM 5.3 FlashX Legal",
+   "pricing": {
+    "prompt": "0.00000037",
+    "completion": "0.00000125",
+    "input_cache_read": "0.000000075"
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash-1017",
+   "name": "DeepSeek: DeepSeek V4.1 Flash 1017",
+   "pricing": {
+    "prompt": "0.00000003",
+    "completion": "0.0000002",
+    "input_cache_read": "0.000000001"
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash-1017:batch",
+   "name": "DeepSeek: DeepSeek V4.1 Flash 1017 (batch)",
+   "pricing": {
+    "prompt": "0.000000035",
+    "completion": "0.000000149",
+    "input_cache_read": "0.0000000029"
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3-prime",
+   "name": "Z.ai: GLM 5.3 Prime",
+   "pricing": {
+    "prompt": "0.00000168",
+    "completion": "0.00000528",
+    "input_cache_read": "0.000000336"
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3-flashx",
+   "name": "Z.ai: GLM 5.3 FlashX",
+   "pricing": {
+    "prompt": "0.00000037",
+    "completion": "0.00000125",
+    "input_cache_read": "0.000000075"
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash",
+   "name": "DeepSeek: DeepSeek V4.1 Flash",
+   "pricing": {
+    "prompt": "0.0000000507",
+    "completion": "0.0000002028",
+    "input_cache_read": "0.000000001014"
+   }
+  },
+  {
+   "id": "deepseek/deepseek-v4.1-flash:batch",
+   "name": "DeepSeek: DeepSeek V4.1 Flash (batch)",
+   "pricing": {
+    "prompt": "0.00000005",
+    "completion": "0.00000015",
+    "input_cache_read": "0.000000004"
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3-flash",
+   "name": "Z.ai: GLM 5.3 Flash",
+   "pricing": {
+    "prompt": "0.00000015",
+    "completion": "0.0000005",
+    "input_cache_read": "0.00000003"
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3-flash:batch",
+   "name": "Z.ai: GLM 5.3 Flash (batch)",
+   "pricing": {
+    "prompt": "0.000000023",
+    "completion": "0.000000068",
+    "input_cache_read": "0.000000009"
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "name": "Z.ai: GLM 5.3",
+   "pricing": {
+    "prompt": "0.0000000699",
+    "completion": "0.0000014",
+    "input_cache_read": "0.0000000689"
+   }
+  },
+  {
+   "id": "z-ai/glm-5.3:batch",
+   "name": "Z.ai: GLM 5.3 (batch)",
+   "pricing": {
+    "prompt": "0.00000028",
+    "completion": "0.000001249",
+    "input_cache_read": "0.000000061"
+   }
+  },
+  {
+   "id": "qwen/qwen3.8-27b",
+   "name": "Qwen: Qwen3.8 27B",
+   "pricing": {
+    "prompt": "0.00000006",
+    "completion": "0.00000196",
+    "input_cache_read": "0.000000059"
+   }
+  },
+  {
+   "id": "qwen/qwen3.8-27b:batch",
+   "name": "Qwen: Qwen3.8 27B (batch)",
+   "pricing": {
+    "prompt": "0.00000016",
+    "completion": "0.000002",
+    "input_cache_read": "0.00000004"
+   }
+  },
+  {
+   "id": "qwen/qwen3-coder-30b-a3b-instruct",
+   "name": "Qwen: Qwen3 Coder 30B A3B Instruct",
+   "pricing": {
+    "prompt": "0.00000007",
+    "completion": "0.00000028"
+   }
+  },
+  {
+   "id": "qwen/qwen3-14b",
+   "name": "Qwen: Qwen3 14B",
+   "pricing": {
+    "prompt": "0.00000012",
+    "completion": "0.00000024"
+   }
+  }
+ ]
+}

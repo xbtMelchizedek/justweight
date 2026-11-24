@@ -1,0 +1,2 @@
+agent-deeplinks 0.1.15 by Shaw (lalalune), MIT. https://github.com/lalalune/agent-deeplinks
+Vendored unmodified from the npm package dist/ (index.js, catalog.js, generated-icons.js).

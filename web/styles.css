@@ -1,0 +1,27 @@
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-body, Inter, system-ui, sans-serif); }
+main { max-width: 960px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 20px; }
+h1 { font-family: var(--font-display, Geist, Inter, sans-serif); font-weight: 500; font-size: 32px; margin: 0 0 8px; }
+h2 { font-weight: 500; font-size: 18px; margin: 0 0 10px; }
+.lede, .muted { color: var(--text-secondary); }
+.muted { font-size: 14px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-panel, 26px); padding: 20px; }
+form.panel { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 12px; align-items: end; }
+label { display: grid; gap: 6px; font-size: 14px; color: var(--text-secondary); }
+input { font: inherit; font-size: 16px; padding: 10px 14px; border-radius: var(--radius-control, 18px); border: 1px solid var(--border); background: var(--background); color: var(--foreground); min-width: 0; }
+button { font: inherit; font-weight: 500; padding: 10px 20px; border-radius: var(--radius-control, 18px); border: 0; background: var(--accent); color: var(--accent-foreground); cursor: pointer; transition: transform var(--duration-fast, 160ms) var(--ease-standard, ease); }
+button:active { transform: scale(0.97); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border-subtle, var(--border)); vertical-align: top; }
+th { font-weight: 500; color: var(--text-secondary); }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.best { background: var(--accent-subtle); }
+.note { color: var(--text-muted); font-size: 12px; }
+.agents { display: flex; flex-wrap: wrap; gap: 8px; }
+.agents a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--radius-control, 18px); color: var(--foreground); text-decoration: none; font-size: 14px; }
+.agents a:hover { background: var(--surface-muted); border-color: var(--border-strong); }
+.agents img { width: 18px; height: 18px; }
+a { color: var(--accent-strong, var(--accent)); }
+.wrap { overflow-x: auto; }
+@media (max-width: 640px) { form.panel { grid-template-columns: 1fr 1fr; } form.panel label:first-child { grid-column: 1 / -1; } }
+main > *, #result > * { min-width: 0; }
+#result { display: grid; gap: 20px; }
