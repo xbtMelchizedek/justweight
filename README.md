@@ -124,6 +124,7 @@ Small tools that each do one job and work together. Use any one on its own.
 - [agent-price-feed](https://github.com/xbtMelchizedek/agent-price-feed): alerts by JSON Feed, RSS, CLI and MCP when those prices move, a cheaper route appears, or Flop lists a model.
 - [agent-spendcap](https://github.com/xbtMelchizedek/agent-spendcap): a budget policy for agents: holds before each call, settlement from real usage, a hash-chained ledger, and a drop-in fetch for OpenAI-compatible APIs.
 - [flop-receipt-root](https://github.com/xbtMelchizedek/flop-receipt-root): proves a Flop compute settlement to an EVM contract without a bridge, and checks one receipt offline.
+- [flop-spend](https://github.com/xbtMelchizedek/flop-spend): has an address spent on Flop inference yet? Settled spend per address, re-read on chain, as a CLI, MCP tool and dashboard.
 
 ## License
 
