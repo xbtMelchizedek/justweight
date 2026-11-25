@@ -18,6 +18,7 @@ const routes = [
   ['openrouter.ai', '/thinkingmachines/inkling-2-mini', 'or_page_thinkingmachines_inkling-2-mini.rsc.txt'],
   ['llm.chutes.ai', '', 'chutes_models.json'],
   ['pearlresearch.ai', '', 'pearl_pricing.html'],
+  ['api.deepinfra.com', '/models/list', 'deepinfra_models.json'],
   ['api.venice.ai', '', 'venice_models.json'],
   ['api.coingecko.com', '', 'coingecko.json'],
 ];
@@ -64,8 +65,8 @@ test('one dead source does not hide the others', async () => {
 test('v0.2 sources all answer from fixtures, and every new venue is present', async () => {
   const snap = await fetchAll({ fetchImpl: fakeFetch() });
   assert.deepEqual(snap.sources.filter((s) => !s.ok).map((s) => s.id), []);
-  assert.equal(snap.sources.length, 12);
-  for (const p of ['venice', 'local', 'openrouter:pearl-research/fp8', 'openrouter:primeintellect/flex']) {
+  assert.equal(snap.sources.length, 13);
+  for (const p of ['deepinfra', 'venice', 'local', 'openrouter:pearl-research/fp8', 'openrouter:primeintellect/flex']) {
     assert.ok(snap.offers.some((o) => o.provider === p), p);
   }
   assert.equal(snap.flop.testnetPriceIndex, null, 'testnet has no complete hour with trades yet');
