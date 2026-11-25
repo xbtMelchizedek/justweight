@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import * as flop from './sources/flop.mjs';
 import * as usd from './sources/usd.mjs';
+import { DEEPINFRA_URL, parseDeepInfra } from './sources/deepinfra.mjs';
 import { parseVenice, VENICE_URL } from './sources/venice.mjs';
 import { parseOrPage, OR_PAGE } from './sources/orproviders.mjs';
 import { localOffers } from './sources/local.mjs';
@@ -40,7 +41,7 @@ export async function fetchAll({ fetchImpl = globalThis.fetch, now = () => new D
       return null;
     }
   };
-  const [gw, index, testnet, tIndex, or, ch, pearl, venice, rates, ...orp] = await Promise.all([
+  const [gw, index, testnet, tIndex, or, ch, pearl, venice, deepinfra, rates, ...orp] = await Promise.all([
     run('flop-gateway', flop.GATEWAY_URL, {}, flop.parseGateway),
     run('flop-price-index', flop.PRICE_INDEX_URL, { timeoutMs: 120_000 }, (b) => flop.parsePriceIndex(b, 'devnet')),
     run('flop-testnet', flop.TESTNET_MODELS_URL, {}, flop.parseTestnet),
@@ -49,6 +50,7 @@ export async function fetchAll({ fetchImpl = globalThis.fetch, now = () => new D
     run('chutes-bittensor', usd.CHUTES_URL, {}, usd.parseChutes),
     run('pearl-labs', usd.PEARL_URL, { kind: 'text' }, usd.parsePearl),
     run('venice', VENICE_URL, {}, parseVenice),
+    run('deepinfra', DEEPINFRA_URL, {}, parseDeepInfra),
     run('coingecko', usd.COINGECKO_URL, {}, usd.parseRates),
     ...TIERS.map((t) => run(`openrouter-providers:${t.model}`, OR_PAGE(t.model), { kind: 'rsc' }, (b) => parseOrPage(b, t.model))),
   ]);
@@ -67,6 +69,7 @@ export async function fetchAll({ fetchImpl = globalThis.fetch, now = () => new D
     ...(ch ?? []),
     ...(pearl ?? []),
     ...(venice ?? []),
+    ...(deepinfra ?? []),
     ...localOffers(),
   ];
   sources.sort((a, b) => a.id.localeCompare(b.id));

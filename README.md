@@ -73,6 +73,7 @@ The page has "Open in your agent" buttons (Cursor, Grok Bot, Claude, Claude Code
 | pearl-labs | https://pearlresearch.ai/pricing | USD | public pricing page, parsed; zero rows is an error |
 | openrouter | https://openrouter.ai/api/v1/models | USD | list price per token, scaled to 1M; `-1` sentinel dropped |
 | flop-testnet-price-index | https://testnet.flopscan.io/api/price-index/v1/preview | FLOP/G_n | testnet realized price from settled channels, testnet genesis pinned. Feeds the FLOP IU column once testnet lists models and an hour clears its floors. |
+| deepinfra | https://api.deepinfra.com/models/list | USD | public text-generation models with input and output token pricing; cents per token converted to USD per million |
 | venice | https://api.venice.ai/api/v1/models | USD (=DIEM) | list price; Venice ids mapped to OpenRouter ids by a hand-checked alias table (`src/sources/venice.mjs`); privacy label, E2EE and TEE flags kept; payable by USD, staked DIEM or x402 USDC |
 | openrouter-providers:&lt;model&gt; | https://openrouter.ai/&lt;model&gt; | USD | one row per OpenRouter provider (Pearl Research included) for each tier model: list price, OpenRouter's published effective price and cache-hit rate, p50 latency and throughput (last 30 min), zero-data-retention flag. Parsed from the model page payload, not a stable API: it fails loudly if the shape changes. |
 | local | (none) | LOCAL | Inkling 2 Mini on your own hardware. API cost 0; electricity and hardware not counted; unit LOCAL so it never wins a USD ranking. |

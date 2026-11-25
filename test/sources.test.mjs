@@ -220,3 +220,20 @@ test('testnet price index: genesis pinned per network; 0-trade hours give no pri
   assert.throws(() => parsePriceIndex(j('flop_price_index.json'), 'testnet'), /not the pinned testnet genesis/);
   assert.throws(() => parsePriceIndex({ ...j('flop_price_index.json'), genesisHash: undefined }), /genesis/);
 });
+
+import { parseDeepInfra } from '../src/sources/deepinfra.mjs';
+
+test('deepinfra converts cents per token and skips deprecated or unpriced models', () => {
+  const models = j('deepinfra_models.json');
+  const offers = parseDeepInfra(models);
+  assert.deepEqual(offers.map(o => [o.model, o.inPer1M, o.outPer1M]), [
+    ['Qwen/Qwen3.8-27B', '0.15', '1.875'],
+  ]);
+  const model = models.find(m => m.model_name === 'Qwen/Qwen3.8-27B');
+  const undiscounted = { ...model, pricing: { ...model.pricing, discount: null } };
+  assert.equal(parseDeepInfra([undiscounted])[0].outPer1M, '2.5');
+  const withInput = value => ({ ...model, pricing: { ...model.pricing, cents_per_input_token: value } });
+  assert.throws(() => parseDeepInfra({}), /model list/);
+  assert.throws(() => parseDeepInfra([withInput(null)]), /no priced text models/);
+  assert.equal(parseDeepInfra([withInput(0)])[0].inPer1M, '0');
+});

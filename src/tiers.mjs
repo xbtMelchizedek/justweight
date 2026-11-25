@@ -16,6 +16,7 @@ export const VENUES = [
   { id: 'flop', label: 'FLOP (receipts)', match: (o) => o.provider === 'flop-realized' },
   { id: 'pearl', label: 'Pearl', match: (o) => o.provider === 'pearl-labs' || o.provider.startsWith('openrouter:pearl-research') },
   { id: 'chutes', label: 'Chutes (Bittensor)', match: (o) => o.provider === 'chutes-bittensor' || o.provider.startsWith('openrouter:chutes') },
+  { id: 'deepinfra', label: 'DeepInfra', match: (o) => o.provider === 'deepinfra' },
   { id: 'venice', label: 'Venice', match: (o) => o.provider === 'venice' },
   { id: 'openrouter', label: 'OpenRouter (any provider)', match: (o) => o.provider === 'openrouter' || o.provider.startsWith('openrouter:') },
   { id: 'local', label: 'Local', match: (o) => o.provider === 'local' },

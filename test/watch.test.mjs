@@ -22,6 +22,7 @@ function fakeFetch(testnet) {
     ['openrouter.ai', '/thinkingmachines/inkling-2-mini', 'or_page_thinkingmachines_inkling-2-mini.rsc.txt'],
     ['llm.chutes.ai', '', 'chutes_models.json'],
     ['pearlresearch.ai', '', 'pearl_pricing.html'],
+    ['api.deepinfra.com', '/models/list', 'deepinfra_models.json'],
     ['api.venice.ai', '', 'venice_models.json'],
     ['api.coingecko.com', '', 'coingecko.json'],
   ];
